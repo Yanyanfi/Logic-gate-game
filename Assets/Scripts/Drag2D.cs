@@ -6,13 +6,14 @@ using UnityEngine;
 public class Drag2D : MonoBehaviour
 {
     private Camera mainCamera;
-    private LogicGate logicGate;
-
+    private Component component;
+     
     private void OnMouseOver()
     {
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButton(1)&&GridManager.Instance.isDragging==false)
         {
             DestroyComponent();
+
             GridManager.Instance.isDragging = false;
         }
     }
@@ -23,7 +24,7 @@ public class Drag2D : MonoBehaviour
     //    if (!GridManager.Instance.isDragging)
     //    {
     //        GridManager.Instance.isDragging = true;
-    //        GridManager.Instance.RemoveLogicGate(logicGate);
+    //        GridManager.Instance.RemoveComponent(component);
     //    }
     //}
     //private void OnMouseDrag()
@@ -32,8 +33,8 @@ public class Drag2D : MonoBehaviour
     //    {
     //        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
     //        Vector2Int gridPosition = GridManager.Instance.GetGridPosition(worldPosition);
-    //        //logicGate.SetPosition(GridManager.Instance.GetGridPosition(worldPosition));
-    //        if (GridManager.Instance.CanBePlaced(logicGate, gridPosition))
+    //        //component.SetPosition(GridManager.Instance.GetGridPosition(worldPosition));
+    //        if (GridManager.Instance.CanBePlaced(component, gridPosition))
     //        {
     //            transform.position = GridManager.Instance.SnapToGrid(worldPosition) + new Vector3(0.5f, 0.5f, 0);
     //        }
@@ -46,19 +47,19 @@ public class Drag2D : MonoBehaviour
     //private void OnMouseUp()
     //{
     //    Vector2Int gridPosition = GridManager.Instance.GetGridPosition(transform.position);
-    //    logicGate.SetPosition(gridPosition);
-    //    GridManager.Instance.PlaceLogicGate(logicGate);
+    //    component.SetPosition(gridPosition);
+    //    GridManager.Instance.PlaceComponent(component);
     //    GridManager.Instance.isDragging = false;
     //}
-    //void Awake()
-    //{
-    //    logicGate = gameObject.GetComponent<LogicGate>();
-    //    mainCamera = FindObjectOfType<Camera>();
-    //}
+    void Awake()
+    {
+        component = gameObject.GetComponent<Component>();
+        mainCamera = FindObjectOfType<Camera>();
+    }
 
     private void DestroyComponent()
     {
-        GridManager.Instance.RemoveLogicGate(logicGate);
+        GridManager.Instance.RemoveComponent(component);
         Destroy(gameObject);
     }
 }

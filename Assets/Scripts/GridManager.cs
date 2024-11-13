@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -10,8 +11,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int gridHeight = 100; // 网格高度
     [SerializeField] private float cellSize = 1.0f; // 单元格大小
     [SerializeField] private Camera mainCamera;
-    private List<LogicGate> logicGates;
-    private List<Wire> wires;
+    public List<Component> components;
+    public List<Wire> wires;
     public float CellSize { get { return cellSize; } }
     public bool isDragging=false;
     public static GridManager Instance { get; private set; }
@@ -30,33 +31,53 @@ public class GridManager : MonoBehaviour
         }
         transform.position = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
         WorldPositionOfGridOrigin = transform.position;
-        logicGates = new List<LogicGate>();
+        components = new List<Component>();
         wires = new List<Wire>();
     }
 
     private void Start()
     {
         // 可以选择性地在游戏开始时绘制网格线
-        DrawLine();
+        //DrawLine();
     }
 
     private void Update()
     {
         // 可选：根据需要更新或重新绘制网格线
-        DrawLine();
+        //DrawLine();
     }
-    public void RemoveLogicGate(LogicGate logicGate)
+    public void RemoveComponent(Component component)
     {
-        logicGates.Remove(logicGate);
+        Debug.LogFormat("RemoveComponent");
+        components.Remove(component);
     }
-    public void PlaceLogicGate(LogicGate logicGate)
+    public void PlaceComponent(Component component)
     {
-        logicGates.Add(logicGate);
+        components.Add(component);
     }
-
+    public void RemoveWire(Wire wire)
+    {
+        wires.Remove(wire);
+    }
+    public void PlaceWire(Wire wire)
+    {
+        wires.Add(wire);
+    }
+    public bool CanBePlaced(Wire wire)
+    {
+        foreach (var logicGate in components)
+        {
+            if (logicGate.PositionOfBody.Intersect(wire.Position).Any())
+            {
+                Debug.Log("conflict");
+                return false;
+            }
+        }
+        return true;
+    }
     public bool CanBePlaced(Component component)
     {
-        foreach (var logicGate in logicGates)
+        foreach (var logicGate in this.components)
         {
             List<Vector2Int> positionOfAll = logicGate.PositionOfInputPin.Concat(logicGate.PositionOfBody)
                 .Concat(logicGate.PositionOfOutputPin).ToList();
@@ -92,7 +113,7 @@ public class GridManager : MonoBehaviour
         {
             truePositionOfPin.Add(pos + gridPosition);
         }
-        foreach (var logicGate in logicGates)
+        foreach (var logicGate in this.components)
         {
             List<Vector2Int> positionOfAll = logicGate.PositionOfInputPin.Concat(logicGate.PositionOfBody)
                 .Concat(logicGate.PositionOfOutputPin).ToList();

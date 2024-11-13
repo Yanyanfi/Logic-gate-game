@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LineDrawer : MonoBehaviour
+public class New : MonoBehaviour
 {
-    [SerializeField] private LineRenderer lineRenderer;
-
-    private void Awake()
+    // Start is called before the first frame update
+    void Start()
     {
         
     }

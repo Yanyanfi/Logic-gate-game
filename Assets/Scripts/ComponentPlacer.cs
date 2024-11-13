@@ -3,29 +3,29 @@ using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
 
-public class LogicGatePlacer : MonoBehaviour
+public class ComponentPlacer : MonoBehaviour
 {
-    [SerializeField] private GameObject logicGatePrefab;
+    [SerializeField] private List<GameObject> componentPrefabs;
     [SerializeField] private GridManager gridManager;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float alpha = 0.5f;
-    private GameObject currentLogicGate;
+    private GameObject currentComponent;
 
     void Update()
     {
         if (gridManager.isDragging)
         {
             Vector2Int gridPosition = gridManager.GetGridPosition(mainCamera.ScreenToWorldPoint(Input.mousePosition));
-            currentLogicGate.transform.position = gridManager.GetWorldPosition(gridPosition) + new Vector3(0.5f, 0.5f, 0);
+            currentComponent.transform.position = gridManager.GetWorldPosition(gridPosition) + new Vector3(0.5f, 0.5f, 0);
             if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("asdfs");
-                LogicGate logicGate = currentLogicGate.GetComponent<LogicGate>();
-                logicGate.SetPosition(gridPosition);
-                if (gridManager.CanBePlaced(logicGate))
+                Debug.Log("GetMouseButtonDown");
+                Component component = currentComponent.GetComponent<Component>();
+                component.SetPosition(gridPosition);
+                if (gridManager.CanBePlaced(component))
                 {
-                    Debug.Log("kefang");
-                    gridManager.PlaceLogicGate(logicGate);
+                    Debug.Log("CanBePlaced");
+                    gridManager.PlaceComponent(component);
                     SetChildrenTransparency(1);
                     gridManager.isDragging = false;
                 }
@@ -36,22 +36,22 @@ public class LogicGatePlacer : MonoBehaviour
             }
         }
     }
-    public void StartPlacement()
+    public void StartPlacement(int index)
     {
         if (gridManager.isDragging == false)
         {
             gridManager.isDragging = true;
             gridManager.isDragging = true;
-            currentLogicGate = Instantiate(logicGatePrefab);
-            currentLogicGate.transform.position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            currentComponent = Instantiate(componentPrefabs[index]);
+            currentComponent.transform.position = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             SetChildrenTransparency(alpha);
-        }   
+        }
     }
 
     private void SetChildrenTransparency(float alpha)
     {
         // 获取所有子对象的 SpriteRenderer（包括父对象本身的 SpriteRenderer）
-        SpriteRenderer[] renderers = currentLogicGate.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer[] renderers = currentComponent.GetComponentsInChildren<SpriteRenderer>();
 
         foreach (SpriteRenderer renderer in renderers)
         {
@@ -62,11 +62,11 @@ public class LogicGatePlacer : MonoBehaviour
     }
     private void CancelPlacement()
     {
-        if (currentLogicGate != null)
+        if (currentComponent != null)
         {
-            Destroy(currentLogicGate); // 删除逻辑门对象
+            Destroy(currentComponent); // 删除逻辑门对象
             gridManager.isDragging = false;
-            currentLogicGate = null;
+            currentComponent = null;
         }
     }
 

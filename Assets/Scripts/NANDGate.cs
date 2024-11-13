@@ -3,23 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class NANDGate :LogicGate
+public class NANDGate :Component
 {
     protected override void ExecuteLogic()
     {
         if (inputWires.Count >= 2)
         {
-            bool result = false;
+            int result = 0;
             foreach(var wire in inputWires)
             {
-                if (wire.Value == false)
-                    result = true;
+                if (wire.Value == 0)
+                    result = 1;
             }
-            SetOutputValue(result); // 将结果传递到输出线路
+            OutputValue = result;
         }
         else
         {
-            SetOutputValue(false); 
+            OutputValue = 1;
         }
     }
     public override void SetPosition(Vector2Int pos)
@@ -39,12 +39,8 @@ public class NANDGate :LogicGate
 
     private void Awake()
     {
-        RelativePositionOfInputPin=new();
-        RelativePositionOfBody = new();
-        RelativePositionOfOutputPin = new();
-        PositionOfBody = new();
-        PositionOfInputPin = new();
-        PositionOfOutputPin = new();
+        InitComponent();
+        OutputValue = 1;   
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
@@ -54,4 +50,6 @@ public class NANDGate :LogicGate
         RelativePositionOfInputPin.Add(new Vector2Int( -2, -1));
         RelativePositionOfOutputPin.Add(new Vector2Int(2, 0));
     }
+
+    
 }
