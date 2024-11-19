@@ -11,6 +11,7 @@ public class WireDrawer : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GridManager gridManager;
     private GameObject tempWire;
+    private NewWire wire;
     private Vector2Int startPos;
     private Vector2Int endPos;
     private Vector2Int turningPos;
@@ -141,6 +142,7 @@ public class WireDrawer : MonoBehaviour
                     isDrawing = true;
                     startPos= gridManager.GetGridPosition(worldPos);
                     tempWire = Instantiate(wirePrefab);
+                    wire = tempWire.GetComponent<NewWire>();
                 } 
             }
         }
@@ -154,20 +156,22 @@ public class WireDrawer : MonoBehaviour
                 if (EventSystem.current.IsPointerOverGameObject() == false)
                 {
                     DrawLine(tempWire.GetComponent<LineRenderer>(),startPos, turningPos, endPos);
-                    tempWire.GetComponent<Wire>().Position = GetOccupiedPos(startPos, turningPos, endPos);
+                    wire.Positions = GetOccupiedPos(startPos, turningPos, endPos);
+                    wire.StartPosition = startPos;
+                    wire.EndPosition = endPos;
                 }
                 
             }
             if (Input.GetMouseButtonUp(0)&&isDrawing)
             {
                 isDrawing = false;
-                if (startPos == endPos || gridManager.CanBePlaced(tempWire.GetComponent<Wire>())==false)
+                if (startPos == endPos || gridManager.CanBePlaced(wire)==false)
                 {
-                    Object.Destroy(tempWire);
+                    Destroy(tempWire);
                 }
                 else
                 {
-                    gridManager.PlaceWire(tempWire.GetComponent<Wire>());
+                    gridManager.PlaceWire(wire);
                 }
             }
         }

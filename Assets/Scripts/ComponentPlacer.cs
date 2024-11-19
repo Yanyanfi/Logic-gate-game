@@ -20,8 +20,8 @@ public class ComponentPlacer : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 Debug.Log("GetMouseButtonDown");
-                Component component = currentComponent.GetComponent<Component>();
-                component.SetPosition(gridPosition);
+                NewComponent component = currentComponent.GetComponent<NewComponent>();
+                component.SetPositions(gridPosition);
                 if (gridManager.CanBePlaced(component))
                 {
                     Debug.Log("CanBePlaced");
@@ -64,7 +64,7 @@ public class ComponentPlacer : MonoBehaviour
     {
         if (currentComponent != null)
         {
-            Destroy(currentComponent); // 删除逻辑门对象
+            Destroy(currentComponent); // 删除元件
             gridManager.isDragging = false;
             currentComponent = null;
         }

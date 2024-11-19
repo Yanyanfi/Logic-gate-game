@@ -1,55 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class NANDGate :Component
+public class NANDGate :NewComponent
 {
-    protected override void ExecuteLogic()
+    public override void HandleInputs(object sender, EventArgs e)
     {
-        if (inputWires.Count >= 2)
-        {
-            int result = 0;
-            foreach(var wire in inputWires)
-            {
-                if (wire.Value == 0)
-                    result = 1;
-            }
-            OutputValue = result;
-        }
+        int inputA = InputPins.GetValue(0);
+        int inputB = InputPins.GetValue(1);
+        if (inputA == 1 && inputB == 1)
+            OutputPins.SetValue(0, 0);
         else
-        {
-            OutputValue = 1;
-        }
-    }
-    public override void SetPosition(Vector2Int pos)
-    {
-        PositionOfInputPin.Clear();
-        PositionOfBody.Clear();
-        PositionOfOutputPin.Clear();
-        for (int i = -1; i <= 1; i++)
-        {
-            for(int j=-1;j<=1;j++)
-                PositionOfBody.Add(new Vector2Int(pos.x+i,pos.y+j));
-        }
-        PositionOfInputPin.Add(new Vector2Int(pos.x - 2, pos.y + 1));
-        PositionOfInputPin.Add(new Vector2Int(pos.x - 2, pos.y - 1));
-        PositionOfOutputPin.Add(new Vector2Int(pos.x + 2, pos.y));
+            OutputPins.SetValue(0, 1);
     }
 
-    private void Awake()
+    protected override void InitShape()
     {
-        InitComponent();
-        OutputValue = 1;   
-        for (int i = -1; i <= 1; i++)
+        InputPins.AddPin(0, Type.BIT, -2, 1, false);
+        InputPins.AddPin(1, Type.BIT, -2, -1, false);
+        Debug.LogFormat("Body.AddRelativePosition start");
+        for (int x = -1; x <= 1; x++)
         {
-            for (int j = -1; j <= 1; j++)
-                RelativePositionOfBody.Add(new Vector2Int( i,j));
+            for (int y = -1; y <= 1; y++)
+            {
+                Body.AddRelativePosition(x, y);
+            }
         }
-        RelativePositionOfInputPin.Add(new Vector2Int(- 2, 1));
-        RelativePositionOfInputPin.Add(new Vector2Int( -2, -1));
-        RelativePositionOfOutputPin.Add(new Vector2Int(2, 0));
+        OutputPins.AddPin(0, Type.BIT, 2, 0);
     }
+
+    
 
     
 }

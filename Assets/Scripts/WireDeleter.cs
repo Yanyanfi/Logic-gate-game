@@ -6,10 +6,10 @@ public class WireDeleter : MonoBehaviour
 {
     [SerializeField] private GridManager gridManager;
     [SerializeField] private Camera mainCamera;
-    private Wire wire;
+    private NewWire wire;
     private void Awake()
     {
-        wire = GetComponent<Wire>();
+        wire = GetComponent<NewWire>();
         gridManager = FindObjectOfType<GridManager>();
         mainCamera = FindObjectOfType<Camera>();
     }
@@ -18,7 +18,7 @@ public class WireDeleter : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Vector2Int CursorGridPosition = gridManager.GetGridPosition(mainCamera.ScreenToWorldPoint(Input.mousePosition));
-            if (wire.Position.Contains(CursorGridPosition)) 
+            if (wire.Positions.Contains(CursorGridPosition)) 
             {
                 gridManager.RemoveWire(wire);
                 Destroy(gameObject);

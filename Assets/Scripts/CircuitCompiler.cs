@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 public class CircuitCompiler : MonoBehaviour
 {
     [SerializeField] private GridManager gridManager;
@@ -16,87 +17,106 @@ public class CircuitCompiler : MonoBehaviour
         {
             Debug.LogFormat("is null");
         }
-        ClearConnectAndSubscribe();
+        ClearConnect();
         Connect();
-        AllComponentsSubscribeValues();
-        InitCircuit();
+        ComponentsAndWiresSubscribeToInputs();
+        InitializeCircuitState();
     }
     private void Connect()
     {
         Debug.LogFormat("Connect start");
         foreach (var component in gridManager.components)
         {
+            if (component == null)
+                continue;
             foreach (var wire in gridManager.wires)
             {
-                if (component.PositionOfInputPin.Intersect(wire.Position).Any())
+                if (wire == null)
                 {
-                    component.inputWires.Add(wire);
+                    continue;
                 }
-                else if (component.PositionOfOutputPin.Intersect(wire.Position).Any())
+                foreach(var pin in component.InputPins)
                 {
-                    wire.inputComponent.Add(component);
+                    if (wire.Positions.Contains(pin.RelativePosition + component.CenterPosition))
+                    {
+                        pin.Connect(wire);
+                    }
+                }
+                foreach(var pin in component.OutputPins)
+                {
+                    if (wire.Positions.Contains(pin.RelativePosition + component.CenterPosition))
+                    {
+                        wire.Connect(pin);
+                    }
+                }
+            }
+        }
+        for(int i = 0; i < gridManager.wires.Count; i++)
+        {
+            if (gridManager.wires[i] == null)
+                continue;
+            for(int j = i + 1; j < gridManager.wires.Count; j++)
+            {
+                if (gridManager.wires[j] == null)
+                    continue;
+                NewWire wire1 = gridManager.wires[i];
+                NewWire wire2 = gridManager.wires[j];
+                if(wire1.Positions.Contains(wire2.StartPosition)||
+                   wire1.Positions.Contains(wire2.EndPosition)||
+                   wire2.Positions.Contains(wire1.StartPosition)||
+                   wire2.Positions.Contains(wire1.EndPosition))
+                {
+                    //Debug.LogFormat("Connect Wires");
+                    wire1.Connect(wire2);
+                    wire2.Connect(wire1);
                 }
             }
         }
         Debug.LogFormat("Connect finished");
     }
-    private void AllComponentsSubscribeValues()
+    private void ComponentsAndWiresSubscribeToInputs()
     {
         Debug.LogFormat("SubscribeValues start");
         foreach(var component in gridManager.components)
         {
-            if (component.inputWires != null)
-            {
-                component.SubscribeToInputs();
-            }
+            if (component == null)
+                continue;
+            component.SubscribeToInputs();
         }
         foreach(var wire in gridManager.wires)
         {
-            if (wire.inputComponent != null)
-            {
-                wire.SubscribeToInputs();
-            }
+            if (wire == null)
+                continue;
+            wire.SubscribeToWiresAndOutputPins();
         }
         Debug.LogFormat("SubscribeValues finished");
     }
-    private void InitCircuit()
+    private void InitializeCircuitState()
     {
-        Debug.LogFormat("InitCircuit start");
-        int count = 0;
-        foreach (var wire in gridManager.wires)
+        Debug.LogFormat("InitializeCircuitState start");
+        foreach(var component in gridManager.components)
         {
-            count++;
-            wire.OnValueChanged();
+            component.HandleInputs(null, EventArgs.Empty);
         }
-        Debug.Log(count);
-        foreach (var component in gridManager.components)
+        foreach(var wire in gridManager.wires)
         {
-            component.OnValueChanged();
+            wire.NoticeOtherWiresToUpdate();
         }
-        Debug.LogFormat("InitCircuit finished");
+        Debug.LogFormat("InitializeCircuitState finished");
     }
-    private void ClearConnectAndSubscribe()
+    private void ClearConnect()
     {
-        Debug.LogFormat("ClearConnectAndSubscribe start");
+        Debug.LogFormat("ClearConnect start");
         foreach (var wire in gridManager.wires)
         {
-            if (wire.inputComponent != null)
-            {
-                wire.CancelSubscribeToInputs();
-                wire.inputComponent.Clear();
-                
-            }
+            wire.DisConnect();
         }
         foreach (var component in gridManager.components)
         {
-            if (component.inputWires != null)
-            {
-                component.CancelSubscribeToInputs();
-                component.inputWires.Clear();
-            }
+            component.Disconnect();
         }
         
-        Debug.LogFormat("ClearConnectAndSubscribe finished");
+        Debug.LogFormat("ClearConnect finished");
     }
     private void Awake()
     {

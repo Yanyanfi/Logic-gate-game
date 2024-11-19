@@ -4,32 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class Power : Component
+public class Power : NewComponent
 {
-    public override void SetPosition(Vector2Int pos)
+    protected override void InitShape()
     {
-        PositionOfBody.Clear();
-        PositionOfOutputPin.Clear();
-        for (int i = -1; i <= 1; i++)
+        for(int x = -1; x <= 1; x++)
         {
-            for (int j = -1; j <= 1; j++)
-                PositionOfBody.Add(new Vector2Int(pos.x + i, pos.y + j));
+            for(int y = -1; y <= 1; y++)
+            {
+                Body.AddRelativePosition(x, y);
+            }
         }
-        PositionOfOutputPin.Add(new Vector2Int(pos.x + 2, pos.y));
-    }
-    protected override void ExecuteLogic()
-    {
-        base.ExecuteLogic();
-    }
-    private void Awake()
-    {
-        InitComponent();
-        outputValue = 0;
-        for (int i = -1; i <= 1; i++)
-        {
-            for (int j = -1; j <= 1; j++)
-                RelativePositionOfBody.Add(new Vector2Int(i, j));
-        }
-        RelativePositionOfOutputPin.Add(new Vector2Int(2, 0));
+        OutputPins.AddPin(0, Type.BIT, 2, 0);
     }
 }

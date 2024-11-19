@@ -11,8 +11,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int gridHeight = 100; // 网格高度
     [SerializeField] private float cellSize = 1.0f; // 单元格大小
     [SerializeField] private Camera mainCamera;
-    public List<Component> components;
-    public List<Wire> wires;
+    public List<NewComponent> components;
+    public List<NewWire> wires;
     public float CellSize { get { return cellSize; } }
     public bool isDragging=false;
     public static GridManager Instance { get; private set; }
@@ -31,43 +31,43 @@ public class GridManager : MonoBehaviour
         }
         transform.position = mainCamera.ScreenToWorldPoint(new Vector3(0, 0, 0));
         WorldPositionOfGridOrigin = transform.position;
-        components = new List<Component>();
-        wires = new List<Wire>();
+        components = new();
+        wires = new();
     }
 
     private void Start()
     {
         // 可以选择性地在游戏开始时绘制网格线
-        //DrawLine();
+        //DebugDrawLine();
     }
 
     private void Update()
     {
         // 可选：根据需要更新或重新绘制网格线
-        //DrawLine();
+        //DebugDrawLine();
     }
-    public void RemoveComponent(Component component)
+    public void RemoveComponent(NewComponent component)
     {
         Debug.LogFormat("RemoveComponent");
         components.Remove(component);
     }
-    public void PlaceComponent(Component component)
+    public void PlaceComponent(NewComponent component)
     {
         components.Add(component);
     }
-    public void RemoveWire(Wire wire)
+    public void RemoveWire(NewWire wire)
     {
         wires.Remove(wire);
     }
-    public void PlaceWire(Wire wire)
+    public void PlaceWire(NewWire wire)
     {
         wires.Add(wire);
     }
-    public bool CanBePlaced(Wire wire)
+    public bool CanBePlaced(NewWire wire)
     {
-        foreach (var logicGate in components)
+        foreach (var component in components)
         {
-            if (logicGate.PositionOfBody.Intersect(wire.Position).Any())
+            if (component.PositionsOfBody.Intersect(wire.Positions).Any())
             {
                 Debug.Log("conflict");
                 return false;
@@ -75,15 +75,13 @@ public class GridManager : MonoBehaviour
         }
         return true;
     }
-    public bool CanBePlaced(Component component)
+    public bool CanBePlaced(NewComponent component)
     {
-        foreach (var logicGate in this.components)
+        foreach (var comp in components)
         {
-            List<Vector2Int> positionOfAll = logicGate.PositionOfInputPin.Concat(logicGate.PositionOfBody)
-                .Concat(logicGate.PositionOfOutputPin).ToList();
-            if (positionOfAll.Intersect(component.PositionOfBody).Any() ||
-                positionOfAll.Intersect(component.PositionOfInputPin).Any() ||
-                positionOfAll.Intersect(component.PositionOfOutputPin).Any())
+            List<Vector2Int> positionOfAll = comp.PositionsOfPins.Concat(comp.PositionsOfBody).ToList();
+            if (positionOfAll.Intersect(component.PositionsOfBody).Any() ||
+                positionOfAll.Intersect(component.PositionsOfPins).Any() )
             {
                 Debug.Log("conflict");
                 return false;
@@ -92,31 +90,30 @@ public class GridManager : MonoBehaviour
 
         foreach (var wire in wires)
         {
-            if (wire.Position.Intersect(component.PositionOfBody).Any())
+            if (wire.Positions.Intersect(component.PositionsOfBody).Any())
                 return false;
         }
         return true;
     }
-    public bool CanBePlaced(Component component,Vector2Int gridPosition)
+    public bool CanBePlaced(NewComponent component,Vector2Int centerPosition)
     {
-        List<Vector2Int> truePositionOfBody=new();
+        List<Vector2Int> truePositionOfBody = new();
         List<Vector2Int> truePositionOfPin = new();
-        foreach(var pos in component.RelativePositionOfBody)
+        foreach(var pos in component.Body.RelativePositions)
         {
-            truePositionOfBody.Add(pos + gridPosition);
+            truePositionOfBody.Add(pos + centerPosition);
         }
-        foreach (var pos in component.RelativePositionOfInputPin)
+        foreach (var pos in component.InputPins.RelativePositions)
         {
-            truePositionOfPin.Add(pos + gridPosition);
+            truePositionOfPin.Add(pos + centerPosition);
         }
-        foreach(var pos in component.RelativePositionOfOutputPin)
+        foreach(var pos in component.OutputPins.RelativePositions)
         {
-            truePositionOfPin.Add(pos + gridPosition);
+            truePositionOfPin.Add(pos + centerPosition);
         }
-        foreach (var logicGate in this.components)
+        foreach (var comp in components)
         {
-            List<Vector2Int> positionOfAll = logicGate.PositionOfInputPin.Concat(logicGate.PositionOfBody)
-                .Concat(logicGate.PositionOfOutputPin).ToList();
+            List<Vector2Int> positionOfAll = comp.PositionsOfPins.Concat(comp.PositionsOfBody).ToList();
             if(positionOfAll.Intersect(truePositionOfBody).Any() || positionOfAll.Intersect(truePositionOfPin).Any())
             {
                 return false;
@@ -124,7 +121,7 @@ public class GridManager : MonoBehaviour
         }
         foreach(var wire in wires)
         {
-            if (wire.Position.Intersect(truePositionOfBody).Any())
+            if (wire.Positions.Intersect(truePositionOfBody).Any())
             {
                 return false;
             }
@@ -161,7 +158,7 @@ public class GridManager : MonoBehaviour
         return GetWorldPosition(GetGridPosition(worldPosition));
     }
 
-    public void DrawLine()
+    private void DebugDrawLine()
     {
         for (int i = 0; i < gridWidth; i++)
         {

@@ -6,7 +6,7 @@ using UnityEngine;
 public class Drag2D : MonoBehaviour
 {
     private Camera mainCamera;
-    private Component component;
+    private NewComponent component;
      
     private void OnMouseOver()
     {
@@ -53,7 +53,7 @@ public class Drag2D : MonoBehaviour
     //}
     void Awake()
     {
-        component = gameObject.GetComponent<Component>();
+        component = gameObject.GetComponent<NewComponent>();
         mainCamera = FindObjectOfType<Camera>();
     }
 
