@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+//实现了元件的删除和拖动功能
+//每个在放置后可以删除或拖动的元件都应该添加这个脚本
 public class Drag2D : MonoBehaviour
 {
     private Camera mainCamera;

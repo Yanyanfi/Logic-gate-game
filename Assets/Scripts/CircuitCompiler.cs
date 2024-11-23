@@ -4,9 +4,20 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+/// <summary>
+/// 包含了编译电路需要的方法
+/// </summary>
 public class CircuitCompiler : MonoBehaviour
 {
     [SerializeField] private GridManager gridManager;
+    /// <summary>
+    /// 按以下步骤编译电路;<br/>
+    /// 1.清除电路的所有连接。这个步骤包括取消元件引脚、线之间的订阅事件和解除元件和线，线和线之间的引用；<br/>
+    /// 2.遍历所有元件和线，根据引脚坐标和线的位置是否重叠，让元件的输入引脚引用线，让线引用输出引脚。<br/>
+    ///   根据线的两端坐标是否和其他线重叠。让线之间相互引用；<br/>
+    /// 3.调用元件和线的内部方法，让元件和线订阅其引用的对象的值改变事件；<br/>
+    /// 4.遍历电路，让所有的元件更新一次输出，所有的线路发布事件。以让电路在初始时刻处于正确状态；
+    /// </summary>
     public void Compile()
     {
         if (gridManager != null)
@@ -100,7 +111,7 @@ public class CircuitCompiler : MonoBehaviour
         }
         foreach(var wire in gridManager.wires)
         {
-            wire.NoticeOtherWiresToUpdate();
+            wire.OnValueChanged();
         }
         Debug.LogFormat("InitializeCircuitState finished");
     }
@@ -117,16 +128,5 @@ public class CircuitCompiler : MonoBehaviour
         }
         
         Debug.LogFormat("ClearConnect finished");
-    }
-    private void Awake()
-    {
-    }
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-
     }
 }

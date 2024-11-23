@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+/// <summary>
+/// 输出引脚，是元件的组成部分;<br/>
+/// 不能单独作为元件的成员属性使用，必须将其放在<see cref="OutputPinList"/>容器中间接访问
+/// </summary>
 public class OutputPin
 {
     public OutputPin(int id,Type type,Vector2Int relativePos)

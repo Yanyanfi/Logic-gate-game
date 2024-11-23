@@ -19,6 +19,9 @@ public class NewWire : MonoBehaviour
             OnValueChanged();
         }
     }
+    /// <summary>
+    /// 线路两端之间包括两端的所有坐标
+    /// </summary>
     public List<Vector2Int> Positions { get; set; }
     public Vector2Int StartPosition { get; set; }
     public Vector2Int EndPosition { get; set; }
@@ -79,6 +82,10 @@ public class NewWire : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 订阅连接到的线和元件的输出引脚的值改变事件
+    /// </summary>
     public void SubscribeToWiresAndOutputPins()
     {
         foreach(var wire in wires)
@@ -96,18 +103,25 @@ public class NewWire : MonoBehaviour
             }
         }
     }
-    public void NoticeOtherWiresToUpdate()
-    {
-        Value = Value;
-    }
+
+    /// <summary>
+    /// 连接某个元件的某个输出引脚
+    /// </summary>
+    /// <param name="outputPin">输出引脚</param>
     public void Connect(OutputPin outputPin)
     {
         outputPins.Add(outputPin);
     }
+
+    /// <summary>
+    /// 连接某条线
+    /// </summary>
+    /// <param name="wire">线</param>
     public void Connect(NewWire wire)
     {
         wires.Add(wire);
     }
+
     public void CancelSubscribe()
     {
         foreach(var pin in outputPins)
@@ -123,6 +137,11 @@ public class NewWire : MonoBehaviour
             wire.ValueChanged -= HandleValuesOnWiresNotice;
         }
     }
+
+    /// <summary>
+    /// 断开对其他线的连接；<br/>
+    /// 调用该方法后自己依然对其他需要自己的值的对象可见
+    /// </summary>
     public void DisConnect()
     {
         CancelSubscribe();
