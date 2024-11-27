@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class NANDGate :NewComponent
+public class NORGate : NewComponent
 {
     public override void HandleInputs(object sender, EventArgs e)
     {
         int inputA = InputPins.GetValue(0);
         int inputB = InputPins.GetValue(1);
-        if (inputA == 1 && inputB == 1)
-            OutputPins.SetValue(0, 0);
-        else
+        if (inputA == 0 && inputB == 0)
             OutputPins.SetValue(0, 1);
+        else
+            OutputPins.SetValue(0, 0);
     }
 
     protected override void InitShape()
@@ -29,5 +29,5 @@ public class NANDGate :NewComponent
             }
         }
         OutputPins.AddPin(0, Type.BIT, 2, 0);
-    } 
+    }
 }

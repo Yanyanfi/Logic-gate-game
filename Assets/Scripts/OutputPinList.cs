@@ -57,6 +57,31 @@ public class OutputPinList:IEnumerable<OutputPin>
             pin.Value = value;
         }
     }
+    /// <summary>
+    /// 获取某个引脚的值
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidOperationException"></exception>
+    public int GetValue(int id)
+    {
+        foreach(var pin in outputPins)
+        {
+            if (pin.Id == id)
+            {
+                return pin.Value;
+            }
+        }
+        throw new InvalidOperationException("Invalid OutputPinList GetValue");
+    }
+
+    public void SubscribeToPins(EventHandler action)
+    {
+        foreach(var pin in outputPins)
+        {
+            pin.ValueChanged += action;
+        }
+    }
     public void Rotate()
     {
         foreach(var pin in outputPins)

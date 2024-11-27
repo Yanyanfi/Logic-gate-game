@@ -103,7 +103,7 @@ public class InputPinList : IEnumerable<InputPin>
 
     /// <summary>
     /// 向所有输入引脚上的所有连线订阅一个事件<br/>
-    /// 对于一个正常的元件，该事件就是<see cref="NewComponent.HandleInputs(object, EventArgs)"/>：处理所有输入更新自己的输出
+    /// 一般情况下，该事件就是<see cref="NewComponent.HandleInputs(object, EventArgs)"/>：处理所有输入更新自己的输出
     /// </summary>
     /// <param name="action">一般是<see cref="NewComponent.HandleInputs(object, EventArgs)"/></param>
     public void SubscribeToWires(EventHandler action)

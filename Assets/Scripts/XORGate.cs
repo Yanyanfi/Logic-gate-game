@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class NANDGate :NewComponent
+public class XORGate : NewComponent
 {
     public override void HandleInputs(object sender, EventArgs e)
     {
         int inputA = InputPins.GetValue(0);
         int inputB = InputPins.GetValue(1);
-        if (inputA == 1 && inputB == 1)
+        if (inputA == inputB)
             OutputPins.SetValue(0, 0);
         else
             OutputPins.SetValue(0, 1);
@@ -29,5 +29,9 @@ public class NANDGate :NewComponent
             }
         }
         OutputPins.AddPin(0, Type.BIT, 2, 0);
-    } 
+    }
+
+
+
+
 }

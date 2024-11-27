@@ -22,6 +22,7 @@ public class ComponentValueChanger : MonoBehaviour
                 pin.Value = ~pin.Value & 0xFF;
             }
         }
+       
     }
     private void OnMouseOver()
     {

@@ -75,7 +75,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1967e1dfd3609ce43a2ad734717edc8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputWires: []
 --- !u!114 &5721355114102885835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,6 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 715915265939392770}
   - component: {fileID: 6060509094625347053}
+  - component: {fileID: 2224244703754205286}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -268,3 +268,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2224244703754205286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162812031529758246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79645c48fd802b478c1400bb3910f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderer: {fileID: 6060509094625347053}
