@@ -1,4 +1,3 @@
-using Assets.Scripts.Interface;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +15,6 @@ public class Power : NewComponent
                 Body.AddRelativePosition(x, y);
             }
         }
-        OutputPins.AddPin(0, Type.BIT, 2, 0);
+        OutputPins.AddPin(0, Type.BIT, 3, 0);
     }
 }
