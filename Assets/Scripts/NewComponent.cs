@@ -41,11 +41,13 @@ public abstract class NewComponent : MonoBehaviour
         Body.Rotate();
         transform.Rotate(0, 0, -90);
     }
-    public virtual void HandleInputs(object sender,EventArgs e)
+    public virtual void HandleInputs(object sender, EventArgs e)
     {
-        foreach(var pin in OutputPins)
+        // 如果你想处理特定的输出引脚，可以使用 GetPin 来获取
+        for (int i = 0; i < OutputPins.Count; i++)
         {
-            pin.Value = pin.Value;
+            OutputPin pin = OutputPins.GetPin(i);  // 获取第 i 个输出引脚
+            pin.Value = pin.Value;  // 这里根据需要处理引脚的值
         }
     }
     protected abstract void InitShape(); 

@@ -89,24 +89,72 @@ public class WireDrawer : MonoBehaviour
             list.RemoveAt(list.Count - 1);
         return list;
     }
-    private void DrawLine(LineRenderer lineRenderer,Vector2Int startPos,Vector2Int turningPos,Vector2Int endPos)
+    private void DrawLine(LineRenderer lineRenderer, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
     {
         lineRenderer.startColor = Color.yellow;
         lineRenderer.endColor = Color.yellow;
+
+        // 设置端点的圆形平滑度
+        lineRenderer.numCapVertices = 10;
+
+        // 计算世界坐标
         Vector3 fixPos = new Vector3(gridManager.CellSize / 2, gridManager.CellSize / 2, 0);
-        Vector3 worldStartPos = gridManager.GetWorldPosition(startPos)+ fixPos;
-        Vector3 worldTurningPos= gridManager.GetWorldPosition(turningPos) + fixPos;
-        Vector3 worldEndPos= gridManager.GetWorldPosition(endPos)+fixPos;
+        Vector3 worldStartPos = gridManager.GetWorldPosition(startPos) + fixPos;
+        Vector3 worldTurningPos = gridManager.GetWorldPosition(turningPos) + fixPos;
+        Vector3 worldEndPos = gridManager.GetWorldPosition(endPos) + fixPos;
+
+        // 设置线路的点
         Vector3[] points = new Vector3[] { worldStartPos, worldTurningPos, worldEndPos };
         lineRenderer.positionCount = points.Length;
-        
-        lineRenderer.startWidth = gridManager.CellSize * 0.8f;
-        lineRenderer.endWidth = gridManager.CellSize*0.8f;
-        lineRenderer.SetPositions(points);
-        Debug.LogFormat($"start:{startPos},turning:{turningPos},end:{endPos}");
-        Debug.Log($"Start Color: {lineRenderer.startColor}, End Color: {lineRenderer.endColor}");
 
+        // 设置主线宽度
+        lineRenderer.startWidth = gridManager.CellSize * 0.8f;
+        lineRenderer.endWidth = gridManager.CellSize * 0.8f;
+
+        // 设置主线的位置
+        lineRenderer.SetPositions(points);
+
+        // 创建并绘制边框线（上边框）
+        LineRenderer topBorder = CreateBorderLine(Color.black, gridManager.CellSize * 0.2f); // 黑色边框
+        topBorder.SetPositions(new Vector3[] { worldStartPos + new Vector3(0, gridManager.CellSize * 0.2f, 0),
+                                           worldTurningPos + new Vector3(0, gridManager.CellSize * 0.2f, 0),
+                                           worldEndPos + new Vector3(0, gridManager.CellSize * 0.2f, 0) });
+
+        // 创建并绘制边框线（下边框）
+        LineRenderer bottomBorder = CreateBorderLine(Color.black, gridManager.CellSize * 0.2f); // 黑色边框
+        bottomBorder.SetPositions(new Vector3[] { worldStartPos - new Vector3(0, gridManager.CellSize * 0.2f, 0),
+                                              worldTurningPos - new Vector3(0, gridManager.CellSize * 0.2f, 0),
+                                              worldEndPos - new Vector3(0, gridManager.CellSize * 0.2f, 0) });
+
+        // 打印调试信息
+        Debug.LogFormat($"start:{startPos}, turning:{turningPos}, end:{endPos}");
+        Debug.Log($"Start Color: {lineRenderer.startColor}, End Color: {lineRenderer.endColor}");
     }
+
+    // 创建边框线
+    private LineRenderer CreateBorderLine(Color color, float width)
+    {
+        GameObject borderObject = new GameObject("WireBorder");
+        borderObject.transform.SetParent(tempWire.transform); // 确保是tempWire的子物体，控制层级
+
+        LineRenderer borderLineRenderer = borderObject.AddComponent<LineRenderer>();
+
+        // 设置边框线的属性
+        borderLineRenderer.startColor = color;
+        borderLineRenderer.endColor = color;
+        borderLineRenderer.startWidth = width;
+        borderLineRenderer.endWidth = width;
+
+        // 设置边框线的其他属性（如：细节、圆形端点等）
+        borderLineRenderer.numCapVertices = 10; // 圆形端点
+        borderLineRenderer.positionCount = 0;   // 初始化为空
+
+        return borderLineRenderer;
+    }
+
+
+
+
     //private void AddCollider(Vector2Int startPos,Vector2Int turningPos,Vector2Int endPos)
     //{
     //    GameObject colliderObject1 = new GameObject();

@@ -46,6 +46,16 @@ public class OutputPinList:IEnumerable<OutputPin>
         }
     }
 
+    // 添加一个通过索引获取输出引脚的方法
+    public OutputPin GetPin(int index)
+    {
+        if (index < 0 || index >= outputPins.Count)
+        {
+            throw new ArgumentOutOfRangeException("Index out of range");
+        }
+        return outputPins[index];
+    }
+
     public IEnumerator<OutputPin> GetEnumerator()
     {
         return ((IEnumerable<OutputPin>)outputPins).GetEnumerator();

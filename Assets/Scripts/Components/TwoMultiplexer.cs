@@ -27,8 +27,8 @@ public class TwoMultiplexer : NewComponent
     {
         // 添加输入引脚 A、B 和选择信号 S
         InputPins.AddPin(0, Type.BIT, -2, 1, false); // 输入 A
-        InputPins.AddPin(1, Type.BIT, -2, 0, false); // 输入 B
-        InputPins.AddPin(2, Type.BIT, -2, -1, false); // 选择信号 S
+        InputPins.AddPin(1, Type.BIT, -2, -1, false); // 输入 B
+        InputPins.AddPin(2, Type.BIT, 0, 3, false); // 选择信号 S
 
         // 设置该元件的形状
         for (int x = -1; x <= 1; x++)
