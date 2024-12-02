@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using UnityEngine;
+using UnityEngine.EventSystems;
 /// <summary>
 /// 实现生成元件放置元件并让元件在放置前跟随鼠标移动的功能
 /// </summary>
@@ -24,7 +25,7 @@ public class ComponentPlacer : MonoBehaviour
             {
                 component.Rotate();
             }
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0)&& EventSystem.current.IsPointerOverGameObject()==false)
             {
                 Debug.Log("GetMouseButtonDown");
                 component.SetPositions(gridPosition);
