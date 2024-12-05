@@ -20,8 +20,8 @@ public class XNORGate : NewComponent
     protected override void InitShape()
     {
         //添加输入引脚
-        InputPins.AddPin(0, Type.BIT, -2, 1, false);
-        InputPins.AddPin(1, Type.BIT, -2, -1, false);
+        InputPins.AddPin(0, ValueType.BIT, -2, 1, false);
+        InputPins.AddPin(1, ValueType.BIT, -2, -1, false);
 
         Debug.LogFormat("Body.AddRelativePosition start");
         //XNOR主体：3x3的方块
@@ -33,6 +33,6 @@ public class XNORGate : NewComponent
             }
         }
         //添加输出引脚
-        OutputPins.AddPin(0, Type.BIT, 2, 0);
+        OutputPins.AddPin(0, ValueType.BIT, 2, 0);
     }
 }

@@ -15,13 +15,13 @@ public class InputPin
     /// <summary>
     /// 由<see cref="InputPinList"/>对象调用的构造函数；<br/>
     /// 在创建一个元件时不会直接使用该构造函数；<br/>
-    /// 详情可见<see cref="InputPinList.AddPin(int, Type, int, int, bool)"/>
+    /// 详情可见<see cref="InputPinList.AddPin(int, ValueType, int, int, bool)"/>
     /// </summary>
     /// <param name="id">引脚的id,一般不重复</param>
-    /// <param name="type">引脚类型：<br/>一位填:<see cref="Type.BIT"/><br/>八位填：<see cref="Type.BYTE"/></param>
+    /// <param name="type">引脚类型：<br/>一位填:<see cref="ValueType.BIT"/><br/>八位填：<see cref="ValueType.BYTE"/></param>
     /// <param name="relativePos">引脚相对于中心的坐标</param>
     /// <param name="isDelay">是否延迟一刻</param>
-    public InputPin(int id,Type type,Vector2Int relativePos,bool isDelay=false)
+    public InputPin(int id,ValueType type,Vector2Int relativePos,bool isDelay=false)
     {
         Id = id;
         Type = type;
@@ -32,7 +32,7 @@ public class InputPin
     }
     public int Id { get;}
     private List<NewWire> wires;//连接在引脚上的线（可以连接多条线）
-    public Type Type { get; }
+    public ValueType Type { get; }
     public bool IsDelay { get;}//是否延迟一刻
     public bool NoConnectedWires
     {
@@ -118,5 +118,3 @@ public class InputPin
     public int Value => IsDelay ? preValue : GetCurrentValue();
     
 }
-
-public enum Type { BIT, BYTE }

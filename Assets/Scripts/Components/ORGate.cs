@@ -18,8 +18,8 @@ public class ORGate : NewComponent
 
     protected override void InitShape()
     {
-        InputPins.AddPin(0, Type.BIT, -2, 1, false);
-        InputPins.AddPin(1, Type.BIT, -2, -1, false);
+        InputPins.AddPin(0, ValueType.BIT, -2, 1, false);
+        InputPins.AddPin(1, ValueType.BIT, -2, -1, false);
         Debug.LogFormat("Body.AddRelativePosition start");
         for (int x = -1; x <= 1; x++)
         {
@@ -28,6 +28,6 @@ public class ORGate : NewComponent
                 Body.AddRelativePosition(x, y);
             }
         }
-        OutputPins.AddPin(0, Type.BIT, 2, 0);
+        OutputPins.AddPin(0, ValueType.BIT, 2, 0);
     }
 }

@@ -13,7 +13,7 @@ public class ComponentValueChanger : MonoBehaviour
     {
        foreach(var pin in component.OutputPins)
         {
-            if (pin.Type == Type.BIT)
+            if (pin.Type == ValueType.BIT)
             {
                 pin.Value = pin.Value == 0 ? 1 : 0;
             }

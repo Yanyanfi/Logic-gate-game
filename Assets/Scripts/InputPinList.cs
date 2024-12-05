@@ -29,11 +29,11 @@ public class InputPinList : IEnumerable<InputPin>
     /// 添加输入引脚
     /// </summary>
     /// <param name="id">引脚的id，一般不重复</param>
-    /// <param name="type">引脚的类型<br/>一位填：<see cref="Type.BIT"/><br/>八位填：<see cref="Type.BYTE"/></param>
+    /// <param name="type">引脚的类型<br/>一位填：<see cref="ValueType.BIT"/><br/>八位填：<see cref="ValueType.BYTE"/></param>
     /// <param name="posX">引脚相对于元件中心在X轴上的偏移</param>
     /// <param name="posY">引脚相对于元件中心在Y轴上的偏移</param>
     /// <param name="isDelay">引脚是否延迟一个时钟刻输出</param>
-    public void AddPin(int id, Type type, int posX, int posY, bool isDelay = false)
+    public void AddPin(int id, ValueType type, int posX, int posY, bool isDelay = false)
     {
         InputPin pin = new(id, type, new Vector2Int(posX, posY), isDelay);
         inputPins.Add(pin);

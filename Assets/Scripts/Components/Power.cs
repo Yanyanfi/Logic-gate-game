@@ -15,6 +15,6 @@ public class Power : NewComponent
                 Body.AddRelativePosition(x, y);
             }
         }
-        OutputPins.AddPin(0, Type.BIT, 3, 0);
+        OutputPins.AddPin(0, ValueType.BIT, 3, 0);
     }
 }

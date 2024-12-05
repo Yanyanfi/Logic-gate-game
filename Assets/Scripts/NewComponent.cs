@@ -12,10 +12,10 @@ using Containers;
 public abstract class NewComponent : MonoBehaviour
 {
     public Body Body { get; } = new();
-    
+
     public InputPinList InputPins { get; } = new();
     public OutputPinList OutputPins { get; } = new();
-    private AutoExpandList<int> memories = new(); 
+    private AutoExpandList<int> memories = new();
     public bool NoInputWires => InputPins.NoWiresConnected;
     public Vector2Int CenterPosition { get; private set; }
     public List<Vector2Int> PositionsOfBody { get; } = new();//在网格中的绝对位置（包括引脚之外的部分，仅用于在放置元件或画线时检查冲突）
@@ -61,9 +61,9 @@ public abstract class NewComponent : MonoBehaviour
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    public virtual void HandleInputs(object sender,EventArgs e)
+    public virtual void HandleInputs(object sender, EventArgs e)
     {
-        foreach(var pin in OutputPins)
+        foreach (var pin in OutputPins)
         {
             pin.Value = pin.Value;
         }
@@ -81,8 +81,8 @@ public abstract class NewComponent : MonoBehaviour
     /// OutputPins.AddPin();<br/>
     /// Body.AddRelativePosition();
     /// </summary>
-    protected abstract void InitShape(); 
-    
+    protected abstract void InitShape();
+
     /// <summary>
     /// 订阅所有连接在输入引脚上的线的值改变事件
     /// </summary>
@@ -107,3 +107,5 @@ public abstract class NewComponent : MonoBehaviour
         Disconnect();
     }
 }
+
+    

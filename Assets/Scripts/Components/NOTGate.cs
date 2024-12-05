@@ -17,7 +17,7 @@ public class NOTGate : NewComponent
 
     protected override void InitShape()
     {
-        InputPins.AddPin(0, Type.BIT, -2, 0, false);  // 添加一个输入引脚
+        InputPins.AddPin(0, ValueType.BIT, -2, 0, false);  // 添加一个输入引脚
         Debug.LogFormat("Body.AddRelativePosition start");
         for (int x = -1; x <= 1; x++)
         {
@@ -26,6 +26,6 @@ public class NOTGate : NewComponent
                 Body.AddRelativePosition(x, y);  // 添加Body的相对位置
             }
         }
-        OutputPins.AddPin(0, Type.BIT, 3, 0);  // 添加一个输出引脚
+        OutputPins.AddPin(0, ValueType.BIT, 3, 0);  // 添加一个输出引脚
     }
 }

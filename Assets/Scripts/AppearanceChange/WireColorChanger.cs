@@ -19,7 +19,7 @@ public class WireColorChanger : MonoBehaviour
     }
     private void ChangeColor(object sender,EventArgs e)
     {
-        if (wire.Type == Type.BYTE)
+        if (wire.Type == ValueType.BYTE)
         {
             if(wire.Value == -1)
             {

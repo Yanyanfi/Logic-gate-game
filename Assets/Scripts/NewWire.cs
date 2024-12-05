@@ -25,7 +25,7 @@ public class NewWire : MonoBehaviour
     public List<Vector2Int> Positions { get; set; }
     public Vector2Int StartPosition { get; set; }
     public Vector2Int EndPosition { get; set; }
-    public Type Type { get; set; }
+    public ValueType Type { get; set; }
     private List<OutputPin> outputPins;
     private List<NewWire> wires;
     public event EventHandler ValueChanged;
@@ -38,7 +38,7 @@ public class NewWire : MonoBehaviour
         outputPins = new();
         wires = new();
         value = 0;
-        Type = Type.BIT;
+        Type = ValueType.BIT;
     }
     private void HandleValuesOnWiresNotice(object sender,EventArgs e)
     {

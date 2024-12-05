@@ -13,7 +13,7 @@ using UnityEngine;
 /// </summary>
 public class OutputPin
 {
-    public OutputPin(int id,Type type,Vector2Int relativePos)
+    public OutputPin(int id,ValueType type,Vector2Int relativePos)
     {
         Id = id;
         Type = type;
@@ -21,7 +21,7 @@ public class OutputPin
         value = 0;
     }
     public int Id { get; }
-    public Type Type { get; }
+    public ValueType Type { get; }
     private int value;
     public int Value
     {
