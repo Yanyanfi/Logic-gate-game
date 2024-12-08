@@ -55,6 +55,17 @@ public class OutputPinList:IEnumerable<OutputPin>
         }
         return outputPins[index];
     }
+    public OutputPin this[int index]
+    {
+        get
+        {
+            if (index < 0 || index >= outputPins.Count)
+            {
+                throw new ArgumentOutOfRangeException("Index out of range");
+            }
+            return outputPins[index];
+        }
+    }
 
     public IEnumerator<OutputPin> GetEnumerator()
     {
