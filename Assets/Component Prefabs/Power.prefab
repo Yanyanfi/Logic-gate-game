@@ -265,6 +265,7 @@ GameObject:
   - component: {fileID: 7013961962176507763}
   - component: {fileID: 5721355114102885835}
   - component: {fileID: 7790192646892453891}
+  - component: {fileID: 4666922771781797994}
   m_Layer: 0
   m_Name: Power
   m_TagString: Untagged
@@ -354,6 +355,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 056218e4165c61646b3fe8b83e4d8c89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4666922771781797994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3988198081547412617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0603368f0bdcde44fa99355cc3034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: Power
 --- !u!1 &7817301534431623114
 GameObject:
   m_ObjectHideFlags: 0

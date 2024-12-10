@@ -585,6 +585,7 @@ GameObject:
   - component: {fileID: -8830456559478056417}
   - component: {fileID: 8942448125471602042}
   - component: {fileID: 8821242693632678734}
+  - component: {fileID: 8037365151947061662}
   m_Layer: 0
   m_Name: XNOR
   m_TagString: Untagged
@@ -663,6 +664,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 634491cd296ae9c4fac23b1bef1f040a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8037365151947061662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8116690306248924304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0603368f0bdcde44fa99355cc3034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: XNOR
 --- !u!1 &8814513186694375749
 GameObject:
   m_ObjectHideFlags: 0

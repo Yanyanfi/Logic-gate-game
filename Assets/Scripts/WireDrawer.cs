@@ -10,12 +10,14 @@ public class WireDrawer : MonoBehaviour
     [SerializeField] private GameObject wirePrefab;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private GridManager gridManager;
+    [SerializeField] private float width = 0.8f;
     private GameObject tempWire;
     private NewWire wire;
     private Vector2Int startPos;
     private Vector2Int endPos;
     private Vector2Int turningPos;
     private bool isDrawing;
+    public static WireDrawer Instance;
     
     //根据起点和终点返回转折点
     private Vector2Int GetTurningPos(Vector2Int startPos,Vector2Int endPos)
@@ -93,19 +95,27 @@ public class WireDrawer : MonoBehaviour
     {
         lineRenderer.startColor = Color.yellow;
         lineRenderer.endColor = Color.yellow;
-        Vector3 fixPos = new Vector3(gridManager.CellSize / 2, gridManager.CellSize / 2, 0);
+        Vector3 fixPos = new (gridManager.CellSize / 2, gridManager.CellSize / 2, 0);
         Vector3 worldStartPos = gridManager.GetWorldPosition(startPos)+ fixPos;
         Vector3 worldTurningPos= gridManager.GetWorldPosition(turningPos) + fixPos;
         Vector3 worldEndPos= gridManager.GetWorldPosition(endPos)+fixPos;
         Vector3[] points = new Vector3[] { worldStartPos, worldTurningPos, worldEndPos };
         lineRenderer.positionCount = points.Length;
         
-        lineRenderer.startWidth = gridManager.CellSize * 0.8f;
-        lineRenderer.endWidth = gridManager.CellSize*0.8f;
+        lineRenderer.startWidth = gridManager.CellSize * width;
+        lineRenderer.endWidth = gridManager.CellSize* width;
         lineRenderer.SetPositions(points);
         Debug.LogFormat($"start:{startPos},turning:{turningPos},end:{endPos}");
         Debug.Log($"Start Color: {lineRenderer.startColor}, End Color: {lineRenderer.endColor}");
 
+    }
+    public void DrawWire(NewWire wire, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
+    {
+        DrawLine(wire.GetComponent<LineRenderer>(), startPos, turningPos, endPos);
+        wire.Positions = GetOccupiedPos(startPos, turningPos, endPos);
+        wire.StartPosition = startPos;
+        wire.TurningPosition = turningPos;
+        wire.EndPosition = endPos;
     }
     //private void AddCollider(Vector2Int startPos,Vector2Int turningPos,Vector2Int endPos)
     //{
@@ -155,10 +165,7 @@ public class WireDrawer : MonoBehaviour
                 turningPos = GetTurningPos(startPos, endPos);
                 if (EventSystem.current.IsPointerOverGameObject() == false)
                 {
-                    DrawLine(tempWire.GetComponent<LineRenderer>(),startPos, turningPos, endPos);
-                    wire.Positions = GetOccupiedPos(startPos, turningPos, endPos);
-                    wire.StartPosition = startPos;
-                    wire.EndPosition = endPos;
+                    DrawWire(wire, startPos, turningPos, endPos);
                 }
                 
             }
@@ -179,6 +186,14 @@ public class WireDrawer : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         isDrawing = false;
     }
 

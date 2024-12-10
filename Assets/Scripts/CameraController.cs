@@ -39,6 +39,6 @@ public class CameraController : MonoBehaviour
     {
         mainCamera = GetComponent<Camera>();
         mainCamera.aspect = 16f / 9;
-        transform.position = GridManager.Instance.transform.position;
+        //transform.position = GridManager.Instance.transform.position;
     }
 }

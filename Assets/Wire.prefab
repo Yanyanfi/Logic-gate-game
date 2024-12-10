@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7030977039706149046}
   - component: {fileID: 3521112601158198806}
   - component: {fileID: -5419207777119870723}
+  - component: {fileID: 8804338087148694752}
   m_Layer: 0
   m_Name: Wire
   m_TagString: Untagged
@@ -172,3 +173,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 000f1893a686d49488d540a09eef9638, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8804338087148694752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554816391287968088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0603368f0bdcde44fa99355cc3034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: Wire

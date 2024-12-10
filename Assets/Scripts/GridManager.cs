@@ -15,8 +15,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private int gridHeight = 100; // 网格高度
     [SerializeField] private float cellSize = 1.0f; // 单元格大小
     [SerializeField] private Camera mainCamera;
-    public List<NewComponent> components;
-    public List<NewWire> wires;
+    public List<NewComponent> components=new();
+    public List<NewWire> wires=new();
     public float CellSize => cellSize;
     public bool isDragging=false;//
     public static GridManager Instance { get; private set; }
@@ -37,6 +37,7 @@ public class GridManager : MonoBehaviour
         WorldPositionOfGridOrigin = transform.position;
         components = new();
         wires = new();
+        InitGrid();
     }
 
     private void Start()
@@ -49,6 +50,17 @@ public class GridManager : MonoBehaviour
     {
         // 可选：根据需要更新或重新绘制网格线
         //DebugDrawLine();
+    }
+    private void InitGrid()
+    {
+        List<NewComponent> staticComponents = FindObjectsOfType<NewComponent>().ToList();
+        foreach(var component in staticComponents)
+        {
+            Vector2Int gridPos = GetGridPosition(component.transform.position);
+            component.SetPositions(gridPos);
+            component.transform.position = SnapToGrid(gridPos);
+            components.Add(component);
+        }
     }
 
     /// <summary>

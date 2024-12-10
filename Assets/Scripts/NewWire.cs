@@ -24,6 +24,7 @@ public class NewWire : MonoBehaviour
     /// </summary>
     public List<Vector2Int> Positions { get; set; }
     public Vector2Int StartPosition { get; set; }
+    public Vector2Int TurningPosition { get; set; }
     public Vector2Int EndPosition { get; set; }
     public ValueType Type { get; set; }
     private List<OutputPin> outputPins;
