@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: -4800032024084506103}
   - component: {fileID: -7135024368133613695}
   - component: {fileID: -2597523684012753721}
+  - component: {fileID: -4564312417138150388}
   m_Layer: 0
   m_Name: 3SG
   m_TagString: Untagged
@@ -268,6 +269,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 289e73c189b121543870c75609aa6ff8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4564312417138150388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5347633711672402763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0603368f0bdcde44fa99355cc3034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: 3SG
 --- !u!1 &7452959180209520732
 GameObject:
   m_ObjectHideFlags: 0

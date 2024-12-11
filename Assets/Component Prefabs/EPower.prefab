@@ -2870,6 +2870,7 @@ GameObject:
   - component: {fileID: 5841415312533810993}
   - component: {fileID: 5129411578820386979}
   - component: {fileID: 1135998411767133618}
+  - component: {fileID: 325376163457105129}
   m_Layer: 0
   m_Name: EPower
   m_TagString: Untagged
@@ -3006,6 +3007,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5831eee0c09b34391b46b628427f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &325376163457105129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8805810764387788389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0603368f0bdcde44fa99355cc3034609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabName: EPower
 --- !u!1 &8897353307904423716
 GameObject:
   m_ObjectHideFlags: 0
