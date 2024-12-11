@@ -44,6 +44,11 @@ public class WireColorChanger : MonoBehaviour
             lineRenderer.startColor = Color.green;
             lineRenderer.endColor = Color.green;
         }
+        else if (wire.Value == 2)
+        {
+            lineRenderer.startColor = Color.cyan;
+            lineRenderer.endColor = Color.cyan;
+        }
         //¶ÌÂ·±äºìÉ«
         else if (wire.Value == -1)
         {
