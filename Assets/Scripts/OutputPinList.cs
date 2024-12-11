@@ -89,16 +89,6 @@ public class OutputPinList:IEnumerable<OutputPin>
             pin.Rotate();
         }
     }
-
-    // 添加一个通过索引获取输出引脚的方法
-    public OutputPin GetPin(int index)
-    {
-        if (index < 0 || index >= outputPins.Count)
-        {
-            throw new ArgumentOutOfRangeException("Index out of range");
-        }
-        return outputPins[index];
-    }
     public OutputPin this[int index]
     {
         get

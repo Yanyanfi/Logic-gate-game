@@ -120,9 +120,8 @@ public class DataManager : MonoBehaviour
         foreach(var wireData in data.WireSaveDatas)
         {
             GameObject obj = Instantiate(PrefabManager.Instance.GetPrefab("Wire"));
-            NewWire wire = obj.GetComponent<NewWire>();
-            WireDrawer.Instance.DrawWire(wire, wireData.StartPos, wireData.TurningPos, wireData.EndPos);
-            GridManager.Instance.wires.Add(wire);
+            WireDrawer.Instance.DrawWire(obj, wireData.StartPos, wireData.TurningPos, wireData.EndPos);
+            GridManager.Instance.wires.Add(obj.GetComponent<NewWire>());
         }
     }
 }

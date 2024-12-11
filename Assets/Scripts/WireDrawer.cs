@@ -91,7 +91,7 @@ public class WireDrawer : MonoBehaviour
             list.RemoveAt(list.Count - 1);
         return list;
     }
-    private void DrawLine(LineRenderer lineRenderer, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
+    private void DrawLine(Transform transform,LineRenderer lineRenderer, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
     {
         lineRenderer.startColor = Color.yellow;
         lineRenderer.endColor = Color.yellow;
@@ -117,13 +117,13 @@ public class WireDrawer : MonoBehaviour
         lineRenderer.SetPositions(points);
 
         // 创建并绘制边框线（上边框）
-        LineRenderer topBorder = CreateBorderLine(Color.black, gridManager.CellSize * 0.2f); // 黑色边框
+        LineRenderer topBorder = CreateBorderLine(transform,Color.black, gridManager.CellSize * 0.2f); // 黑色边框
         topBorder.SetPositions(new Vector3[] { worldStartPos + new Vector3(0, gridManager.CellSize * 0.2f, 0),
                                            worldTurningPos + new Vector3(0, gridManager.CellSize * 0.2f, 0),
                                            worldEndPos + new Vector3(0, gridManager.CellSize * 0.2f, 0) });
 
         // 创建并绘制边框线（下边框）
-        LineRenderer bottomBorder = CreateBorderLine(Color.black, gridManager.CellSize * 0.2f); // 黑色边框
+        LineRenderer bottomBorder = CreateBorderLine(transform,Color.black, gridManager.CellSize * 0.2f); // 黑色边框
         bottomBorder.SetPositions(new Vector3[] { worldStartPos - new Vector3(0, gridManager.CellSize * 0.2f, 0),
                                               worldTurningPos - new Vector3(0, gridManager.CellSize * 0.2f, 0),
                                               worldEndPos - new Vector3(0, gridManager.CellSize * 0.2f, 0) });
@@ -134,10 +134,10 @@ public class WireDrawer : MonoBehaviour
     }
 
     // 创建边框线
-    private LineRenderer CreateBorderLine(Color color, float width)
+    private LineRenderer CreateBorderLine(Transform transform,Color color, float width)
     {
         GameObject borderObject = new GameObject("WireBorder");
-        borderObject.transform.SetParent(tempWire.transform); // 确保是tempWire的子物体，控制层级
+        borderObject.transform.SetParent(transform); // 确保是tempWire的子物体，控制层级
 
         LineRenderer borderLineRenderer = borderObject.AddComponent<LineRenderer>();
 
@@ -153,9 +153,10 @@ public class WireDrawer : MonoBehaviour
 
         return borderLineRenderer;
     }
-    public void DrawWire(NewWire wire, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
+    public void DrawWire(GameObject obj, Vector2Int startPos, Vector2Int turningPos, Vector2Int endPos)
     {
-        DrawLine(wire.GetComponent<LineRenderer>(), startPos, turningPos, endPos);
+        NewWire wire = obj.GetComponent<NewWire>();
+        DrawLine(obj.transform, obj.GetComponent<LineRenderer>(), startPos, turningPos, endPos);
         wire.Positions = GetOccupiedPos(startPos, turningPos, endPos);
         wire.StartPosition = startPos;
         wire.TurningPosition = turningPos;
@@ -209,7 +210,7 @@ public class WireDrawer : MonoBehaviour
                 turningPos = GetTurningPos(startPos, endPos);
                 if (EventSystem.current.IsPointerOverGameObject() == false)
                 {
-                    DrawWire(wire, startPos, turningPos, endPos);
+                    DrawWire(tempWire, startPos, turningPos, endPos);
                 }
                 
             }

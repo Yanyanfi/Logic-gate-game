@@ -19,7 +19,7 @@ public class MultiplexerChanger : MonoBehaviour
     private void ChangeValue()
     {
         // 获取第一个输出引脚（假设只有一个输出引脚）
-        var outputPin = component.OutputPins.GetPin(0); // 使用 GetPin 来获取引脚
+        var outputPin = component.OutputPins[0]; // 使用 GetPin 来获取引脚
 
         // 根据选择信号修改输出引脚的值
         // 选择信号为 0，设置输出为 0
