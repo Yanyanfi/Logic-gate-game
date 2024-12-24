@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 2055a8dc08b953b4080f10fa01e4b4c6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - descriptionPanel: {fileID: 3546139742086193567, guid: 01d7f3afa92b51f458f2cdfcf70cebf8, type: 3}
+  - toggleButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
