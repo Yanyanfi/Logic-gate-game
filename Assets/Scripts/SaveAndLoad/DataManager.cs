@@ -18,7 +18,7 @@ public class DataManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        Load();
+        LoadWithoutClear();
     }
     public void Save()
     {
@@ -35,6 +35,12 @@ public class DataManager : MonoBehaviour
     }
     public void Load()
     {
+        GridManager.Instance.components.Clear();
+        GridManager.Instance.wires.Clear();
+        LoadWithoutClear();
+    }
+    public void LoadWithoutClear()
+    {
         string sceneName = SceneManager.GetActiveScene().name;
         string filePath = Path.Combine(Application.persistentDataPath, sceneName + "_SaveData.json");
         if (File.Exists(filePath))
@@ -50,8 +56,6 @@ public class DataManager : MonoBehaviour
             {
                 Destroy(obj.gameObject);
             }
-            GridManager.Instance.components.Clear();
-            GridManager.Instance.wires.Clear();
             LoadComponents(saveData);
             LoadWires(saveData);
         }
