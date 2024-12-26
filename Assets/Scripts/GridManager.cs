@@ -64,23 +64,6 @@ public class GridManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 清除场景中所有玩家放置的元件和线路<br/>
-    /// </summary>
-    public void RemoveAll()
-    {
-        foreach(var component in FindObjectsOfType<PrefabInfo>())
-        {
-            NewComponent newComponent;
-            if (component.gameObject.TryGetComponent(out newComponent))
-            {
-                components.Remove(newComponent);
-            }
-            Destroy(component.gameObject);     
-        }
-        wires.Clear();
-    }
-
-    /// <summary>
     /// 将元件从<see cref="components"/>中移除
     /// </summary>
     /// <param name="component">要移除的元件</param>
